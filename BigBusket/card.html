@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+          #smartBusket{
+    display: grid;
+    width: 90%;
+    height: auto;
+    margin: auto;
+    grid-template-columns: repeat(5,1fr);
+    gap: 30px;
+    margin-bottom: 100px;
+   }
+   .fnt{
+    font-size: 100px;
+    text-align: center;
+    font-style:initial;
+
+   }
+         #smartBusket>div{
+    width: 100%;
+    height: auto;
+    border: 9px solid red;
+    text-align: center;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+    #smartBusket>div>img{
+        width: 100%;
+        height: auto;
+    }
+    #smartBusket>div>button{
+        height: auto;
+        width: 200px;
+        background-color: rgb(130, 199, 182);
+      font-size: 30px;
+    }
+    </style>
+</head>
+<body>
+    <div id="smartBusket">
+       
+       </div>
+</body>
+</html>
+<script>
+
+let cartItems = JSON.parse(localStorage.getItem("cartProducts"))
+displayCardSm(cartItems)
+let totalCost = cartItems.reduce((acc,el)=>acc+el.price,0)
+    console.log( totalCost)
+
+    function displayCardSm(out) {
+
+document.querySelector("#smartBusket").innerHTML = "";
+
+out.forEach((elem) => {
+  let div=  document.createElement("div")
+let img=document.createElement("img")
+img.setAttribute("src",elem.img)
+let dis = document.createElement("h1")
+dis.innerText=elem.title
+let rev = document.createElement("h2")
+rev.innerText= "RS-"+elem.price
+let cosr = document.createElement("h2")
+cosr.innerText= elem.catagory
+
+let btn = document.createElement("button");
+btn.innerText = "add to cart";
+btn.addEventListener("click",function(){
+  cartItems.push(elem);
+  localStorage.setItem("cartProducts",JSON.stringify(cartItems));
+});
+
+div.append(img,dis,rev,cosr,btn)
+document.querySelector("#smartBusket").append(div)
+});
+}
+</script>
